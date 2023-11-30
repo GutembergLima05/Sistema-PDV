@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const senhaJwt = require("../senhaJwt");
 
-const cadastrarUser = async (req, res) => {
+const cadastrar = async (req, res) => {
   const { nome, email, senha } = req.body;
 
   try {
@@ -26,13 +26,8 @@ const cadastrarUser = async (req, res) => {
   }
 };
 
-module.exports = {
-  cadastrarUser,
-};
 
-
-
-const validarLogin = async (req, res, next) => {
+const login = async (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
@@ -69,4 +64,4 @@ const validarLogin = async (req, res, next) => {
   }
 };
 
-module.exports = validarLogin;
+module.exports = {login, cadastrar};
