@@ -6,7 +6,7 @@ const cadastrarUser = async (req, res) => {
 
   try {
 
-    const emailValido = await knex('usuarios').where('email',email).debug()
+    const emailValido = await knex('usuarios').where('email',email)
     if(emailValido[0]){
         res.status(400).json({ mensagem: "Email já cadastrado."})
     }
@@ -17,7 +17,7 @@ const cadastrarUser = async (req, res) => {
         senha: senhaCriptografada
       };
 
-    const dados = await knex('usuarios').insert(novoUsuario).returning('*').debug();
+    const dados = await knex('usuarios').insert(novoUsuario).returning('*')
     return res.status(201).json(dados);
   } catch (error) {
     return res.status(500).json({ mensagem: error.message });
