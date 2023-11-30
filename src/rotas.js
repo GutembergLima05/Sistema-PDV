@@ -13,11 +13,11 @@ rotas.post('/usuario', validador(usuario), cadastrarUser)
 // TESTES 
 
 // Importações de testes para serem removidas na daily amanhã.
-const { testeRoute } = require('../controllers/testController');
-const { testIntermediario } = require('./intermediarios/intermediarioTeste');
+const { testeRoute } = require('../controladores/usuario');
+const intermediarioTeste = require('./intermediarios/intermediarioTeste');
 
 // Demonstração de intermediario na arquitetura do projeto...
-rotas.use(testIntermediario);
+rotas.use(intermediarioTeste);
 
 // Demonstração de rota da arquitetura do projeto...
 rotas.get('/teste', testeRoute)
