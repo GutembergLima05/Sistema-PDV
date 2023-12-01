@@ -28,27 +28,32 @@ const cadastrar = async (req, res) => {
 const login = async (req, res) => {
   const { email, senha } = req.body;
 
+  if (!email || !senha) {
+    return res
+      .status(400)
+      .json({ mensagem: "Todos os campos são obrigatórios" });
+  }
+
   try {
-    const usuario = await knex("usuarios").where("email", email).first();
+    const usuario = await knex("usuarios").where({ email }).first();
 
-    if (!usuarioLogado) {
-      return res.status(400).json({ mensagem: `Usuário inválido.` });
+    if (!usuario) {
+      return res.status(404).json({ mensagem: "Usuário não encontrado" });
     }
 
-    const { senha: senhaUsuario, ...usuarioLogado } = usuarioLogado;
+    const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
 
-    const validarSenha = await bcrypt.compare(senha, senhaUsuario);
-
-    if (!validarSenha) {
-      return res.status(401).json({ mensagem: "Senha incorreta" });
+    if (!senhaCorreta) {
+      return res.status(400).json({ mensagem: "Email ou senha inválida" });
     }
 
-    const token = jwt.sign({ id: usuario.id }, senhaJwt, { expiresIn: "2h" });
+    const token = jwt.sign({ id: usuario.id }, senhaJwt, { expiresIn: "8h" });
 
-    return res.status(200).json({ usuarioLogado, token });
+    const { senha: _, ...dadosUsuario } = usuario;
+
+    return res.status(200).json({ usuario: dadosUsuario, token });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ mensagem: "Erro interno do servidor" });
+    return res.status(500).json({ menssagem: "Erro interno do servidor" });
   }
 };
 
