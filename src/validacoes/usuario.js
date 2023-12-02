@@ -1,4 +1,5 @@
 const joi = require("joi");
+const knex = require("../db/conexao");
 
 const cadastroOuAtualizacao = joi.object({
   nome: joi.string().empty().required().messages({
@@ -33,4 +34,12 @@ const login = joi.object({
   }),
 });
 
-module.exports = { cadastroOuAtualizacao, login };
+const ChecarEmailJaEmUso = async (email) => {
+  const usuarios = await knex('usuarios')
+    .where('email', email)
+    .select();
+
+  return usuarios.length > 0;
+}
+
+module.exports = { cadastroOuAtualizacao, login, ChecarEmailJaEmUso };

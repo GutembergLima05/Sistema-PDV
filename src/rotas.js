@@ -13,4 +13,7 @@ rotas.post('/login', validador(esquemasUsuario.login), usuario.login)
 rotas.use(validarLogin)
 // Rota para detalhar usuario
 rotas.get('/usuario', usuario.detalharUsuario)
+
+// Rota para editar usuario
+rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), usuario.editarUsuario)
 module.exports = rotas
