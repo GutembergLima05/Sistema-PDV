@@ -31,11 +31,11 @@ const login = async (req, res) => {
   try {
     const usuario = await knex("usuarios").where("email", email).first();
 
-    if (!usuarioLogado) {
+    if (!usuario) {
       return res.status(400).json({ mensagem: `Usuário inválido.` });
     }
 
-    const { senha: senhaUsuario, ...usuarioLogado } = usuarioLogado;
+    const { senha: senhaUsuario, ...usuarioLogado } = usuario;
 
     const validarSenha = await bcrypt.compare(senha, senhaUsuario);
 
