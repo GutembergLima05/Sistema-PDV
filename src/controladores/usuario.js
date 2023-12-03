@@ -61,7 +61,7 @@ const detalharUsuario = async (req, res) => {
       .status(500)
       .json({
         mensagem:
-          "Para acessar este recurso um token de autenticação válido deve ser enviado.",
+          "Usuario nao autenticado.",
       });
   }
 };
