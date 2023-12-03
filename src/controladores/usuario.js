@@ -18,8 +18,8 @@ const cadastrar = async (req, res) => {
       senha: senhaCriptografada,
     };
 
-    const dados = await knex("usuarios").insert(novoUsuario).returning("*");
-    return res.status(201).json(dados);
+    await knex("usuarios").insert(novoUsuario);
+    return res.status(201).json({ mensagem: `Cadastro realizado com sucesso!`});
   } catch (error) {
     return res.status(500).json({ mensagem: error.message });
   }
