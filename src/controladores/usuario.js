@@ -47,7 +47,6 @@ const login = async (req, res) => {
 
     return res.status(200).json({ usuarioLogado, token });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
   }
 };
@@ -56,7 +55,6 @@ const detalharUsuario = async (req, res) => {
   try {
     return res.status(200).json(req.usuario);
   } catch (error) {
-    console.log(error);
     return res
       .status(500)
       .json({
@@ -87,9 +85,8 @@ const editarUsuario = async (req, res) => {
       .update({ nome, email, senha: senhaCriptografada })
       .returning("*");
 
-    return res.status(200).json("Usuario atualizado com sucesso");
+    return res.status(200).json({mensagem: "Usuario atualizado com sucesso" });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
   }
 };
@@ -99,7 +96,6 @@ const listarCategoria = async (req, res) => {
    const categorias = await knex('categorias');
    return res.status(200).json(categorias)
   } catch (error) {
-    console.log(error);
     return res.status(500).json(categorias)
   }
 }
