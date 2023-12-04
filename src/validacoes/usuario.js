@@ -17,7 +17,7 @@ const cadastroOuAtualizacao = joi.object({
     "string.empty": "O campo senha esta vazio",
     "string.min": "A senha precisa conter, no mínimo, 5 caracteres",
   }),
-});
+}).unknown(true);
 
 const login = joi.object({
   email: joi.string().empty().email().required().messages({
@@ -31,6 +31,6 @@ const login = joi.object({
     "string.empty": "O campo senha esta vazio",
     "string.min": "A senha precisa conter, no mínimo, 5 caracteres",
   }),
-});
+}).unknown(true);
 
 module.exports = { cadastroOuAtualizacao, login };
