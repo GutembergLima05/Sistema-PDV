@@ -83,7 +83,7 @@ const editarUsuario = async (req, res) => {
     const atualizacao = await knex("usuarios")
       .where("id", usuarioID)
       .update({ nome, email, senha: senhaCriptografada })
-      .returning("*");
+      .returning("*").first();
    const {senha: _, ...usuarioAtualizado} =  atualizacao
     return res.status(200).json(usuarioAtualizado);
   } catch (error) {
