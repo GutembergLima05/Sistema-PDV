@@ -83,8 +83,8 @@ const editarUsuario = async (req, res) => {
     const atualizacao = await knex("usuarios")
       .where("id", usuarioID)
       .update({ nome, email, senha: senhaCriptografada })
-      .returning("*").first();
-   const {senha: _, ...usuarioAtualizado} =  atualizacao
+      .returning("*");
+   const {senha: _, ...usuarioAtualizado} =  atualizacao[0]
     return res.status(200).json(usuarioAtualizado);
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
