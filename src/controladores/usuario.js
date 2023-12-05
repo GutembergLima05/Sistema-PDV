@@ -57,7 +57,7 @@ const detalharUsuario = async (req, res) => {
     return res.status(200).json(req.usuario);
   } catch (error) {
     return res
-      .status(500)
+      .status(400)
       .json({
         mensagem:
           "Usuario nao autenticado.",
