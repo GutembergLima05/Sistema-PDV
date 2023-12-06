@@ -7,7 +7,7 @@ const validarLogin = async (req, res, next) => {
 
   if (!authorization) {
     return res
-      .status()
+      .status(404)
       .json({
         mensagem:
           "Para acessar este recurso, um token de autenticação válido deve ser enviado",

@@ -7,13 +7,20 @@ const validarLogin = require('./intermediarios/autenticacao');
 
 // Rota pra cadastrar usuário
 rotas.post('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), usuario.cadastrar)
+
 //Rota para login
 rotas.post('/login', validador(esquemasUsuario.login), usuario.login)
 
+// Rota para listar categorias
+rotas.get('/categoria', usuario.listarCategoria)
+
+// Verifica autenticacao
 rotas.use(validarLogin)
+
 // Rota para detalhar usuario
 rotas.get('/usuario', usuario.detalharUsuario)
 
 // Rota para editar usuario
 rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), usuario.editarUsuario)
+
 module.exports = rotas
