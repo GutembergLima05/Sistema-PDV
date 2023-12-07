@@ -7,19 +7,15 @@ const cadastrar = async (req, res) => {
   const { nome, email, senha } = req.body;
 
   try {
-    const emailValido = await knex("usuarios").where("email", email);
-    if (emailValido[0]) {
-      res.status(400).json({ mensagem: "Email já cadastrado." });
-    }
     const senhaCriptografada = await bcrypt.hash(senha, 10);
     const novoUsuario = {
       nome,
       email,
-      senha: senhaCriptografada
+      senha: senhaCriptografada,
     };
 
-    const cadastrar = await knex("usuarios").insert(novoUsuario).returning("*");;
-    const {senha: _, ...usuarioCadastrado} = cadastrar[0];
+    const cadastrar = await knex("usuarios").insert(novoUsuario).returning("*");
+    const { senha: _, ...usuarioCadastrado } = cadastrar[0];
     return res.status(201).json(usuarioCadastrado);
   } catch (error) {
     return res.status(500).json({ mensagem: error.message });
@@ -56,12 +52,9 @@ const detalharUsuario = async (req, res) => {
   try {
     return res.status(200).json(req.usuario);
   } catch (error) {
-    return res
-      .status(500)
-      .json({
-        mensagem:
-          "Usuario nao autenticado.",
-      });
+    return res.status(500).json({
+      mensagem: "Usuario nao autenticado.",
+    });
   }
 };
 
@@ -70,22 +63,13 @@ const editarUsuario = async (req, res) => {
   const { id: usuarioID } = req.usuario;
 
   try {
-    const usuario = await knex("usuarios").where({ email }).first();
-
-    if (usuario && usuario.id !== usuarioID) {
-      return res.status(400).json({
-        mensagem:
-          "O e-mail informado já está sendo utilizado por outro usuário.",
-      });
-    }
-
     const senhaCriptografada = await bcrypt.hash(senha, 10);
 
     const atualizacao = await knex("usuarios")
       .where("id", usuarioID)
       .update({ nome, email, senha: senhaCriptografada })
       .returning("*");
-   const {senha: _, ...usuarioAtualizado} =  atualizacao[0]
+    const { senha: _, ...usuarioAtualizado } = atualizacao[0];
     return res.status(200).json(usuarioAtualizado);
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
@@ -94,10 +78,16 @@ const editarUsuario = async (req, res) => {
 
 const listarCategoria = async (req, res) => {
   try {
-   const categorias = await knex('categorias');
-   return res.status(200).json(categorias)
+    const categorias = await knex("categorias");
+    return res.status(200).json(categorias);
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno do servidor" })
   }
-}
-module.exports = { login, cadastrar, detalharUsuario, editarUsuario, listarCategoria };
+};
+module.exports = {
+  login,
+  cadastrar,
+  detalharUsuario,
+  editarUsuario,
+  listarCategoria,
+};

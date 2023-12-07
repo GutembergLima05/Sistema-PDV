@@ -1,26 +1,40 @@
 const express = require('express');
 const rotas = express()
-const validador = require('./intermediarios/validador');
+const {validador, verificaDadosExistentes} = require('./intermediarios/validador');
 const esquemasUsuario = require('./validacoes/usuario');
-const usuario = require('./controladores/usuario');
+const esquemasCliente = require('./validacoes/clientes')
+const usuarios = require('./controladores/usuario');
+const clientes = require('./controladores/clientes')
+const produtos = require('./controladores/produto');
 const validarLogin = require('./intermediarios/autenticacao');
 
+// ROTAS DE USUARIO
 // Rota pra cadastrar usuário
-rotas.post('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), usuario.cadastrar)
+rotas.post('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), verificaDadosExistentes, usuarios.cadastrar)
 
 //Rota para login
-rotas.post('/login', validador(esquemasUsuario.login), usuario.login)
+rotas.post('/login', validador(esquemasUsuario.login), usuarios.login)
 
 // Rota para listar categorias
-rotas.get('/categoria', usuario.listarCategoria)
+rotas.get('/categoria', usuarios.listarCategoria)
 
 // Verifica autenticacao
 rotas.use(validarLogin)
 
 // Rota para detalhar usuario
-rotas.get('/usuario', usuario.detalharUsuario)
+rotas.get('/usuario', usuarios.detalharUsuario)
 
 // Rota para editar usuario
-rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), usuario.editarUsuario)
+rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), verificaDadosExistentes('usuarios'), usuarios.editarUsuario)
 
+// ROTAS DE PRODUTO
+// Rota para excluir produto por ID
+rotas.delete('/produto/:id', produtos.excluirProduto)
+
+// ROTAS DE CLIENTE
+// Rota para cadastrar cliente
+rotas.post('/cliente', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes('clientes'), clientes.cadastrar)
+
+// Rota para detalhar cliente
+rotas.get('/cliente/:id', clientes.detalhar)
 module.exports = rotas
