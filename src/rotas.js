@@ -4,7 +4,7 @@ const {validador, verificaDadosExistentes} = require('./intermediarios/validador
 const esquemasUsuario = require('./validacoes/usuario');
 const esquemasCliente = require('./validacoes/clientes')
 const usuarios = require('./controladores/usuario');
-const clientes = require('./controladores/clientes')
+const clientes = require('./controladores/cliente')
 const produtos = require('./controladores/produto');
 const validarLogin = require('./intermediarios/autenticacao');
 
@@ -37,4 +37,7 @@ rotas.post('/cliente', validador(esquemasCliente.cadastrarOuEditar), verificaDad
 
 // Rota para detalhar cliente
 rotas.get('/cliente/:id', clientes.detalhar)
+
+// Rota para editar cliente
+rotas.put('/cliente/:id', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes('clientes'), clientes.editar)
 module.exports = rotas
