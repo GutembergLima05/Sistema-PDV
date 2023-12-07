@@ -3,8 +3,10 @@ const rotas = express()
 const validador = require('./intermediarios/validador');
 const esquemasUsuario = require('./validacoes/usuario');
 const usuario = require('./controladores/usuario');
+const produto = require('./controladores/produto');
 const validarLogin = require('./intermediarios/autenticacao');
 
+// ROTAS DE USUARIO
 // Rota pra cadastrar usuário
 rotas.post('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), usuario.cadastrar)
 
@@ -22,5 +24,9 @@ rotas.get('/usuario', usuario.detalharUsuario)
 
 // Rota para editar usuario
 rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), usuario.editarUsuario)
+
+// ROTAS DE PRODUTO
+// Rota para excluir produto por ID
+rotas.delete('/produto/:id', produto.excluirProduto)
 
 module.exports = rotas

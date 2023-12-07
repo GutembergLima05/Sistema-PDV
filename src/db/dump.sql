@@ -28,7 +28,8 @@ CREATE TABLE produtos (
   descricao TEXT NOT NULL,
   quantidade_estoque INTEGER NOT NULL,
   valor NUMERIC NOT NULL,
-  categoria_id INTEGER NOT NULL REFERENCES categorias(id)
+  categoria_id INTEGER NOT NULL REFERENCES categorias(id),
+  usuarios_id INTEGER NOT NULL REFERENCES usuarios(id)
 );
 
 
