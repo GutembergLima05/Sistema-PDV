@@ -11,12 +11,12 @@ const validador = (requisicao) => async (req, res, next) => {
 };
 
 
-const verificaDadosExistentes = async (req, res, next) => {
+const verificaDadosExistentes = (tabela) => async (req, res, next) => {
   console.log(req.body);
   const campos = Object.entries(req.body);
   for (let indice of campos) {
     if (indice[0] === "email" || indice[0] === "cpf") {
-      const dados = await knex("usuarios").where(indice[0], indice[1]).first();
+      const dados = await knex(tabela).where(indice[0], indice[1]).first();
       if (dados && dados.id !== req.usuario.id) {
         return res.json(
           `O ${indice[0]} informado ja esta sendo usado`
