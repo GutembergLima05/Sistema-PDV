@@ -81,7 +81,7 @@ const listarCategoria = async (req, res) => {
     const categorias = await knex("categorias");
     return res.status(200).json(categorias);
   } catch (error) {
-    return res.status(500).json(categorias);
+    return res.status(500).json({ mensagem: "Erro interno do servidor" })
   }
 };
 module.exports = {

@@ -31,6 +31,9 @@ rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), verifica
 // Rota para excluir produto por ID
 rotas.delete('/produto/:id', produtos.excluirProduto)
 
+// Rota detalhar produto
+rotas.get('/produto/:id', produtos.detalharProduto)
+
 // ROTAS DE CLIENTE
 // Rota para cadastrar cliente
 rotas.post('/cliente', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes('clientes'), clientes.cadastrar)
@@ -40,4 +43,8 @@ rotas.get('/cliente/:id', clientes.detalhar)
 
 // Rota para editar cliente
 rotas.put('/cliente/:id', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes('clientes'), clientes.editar)
+
+// Rota Listar Cliente
+rotas.get("/cliente", clientes.listarClientes)
+
 module.exports = rotas

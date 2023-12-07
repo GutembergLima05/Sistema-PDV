@@ -31,9 +31,9 @@ const validarLogin = async (req, res, next) => {
     next();
   } catch (error) {
     if (error.name === "JsonWebTokenError") {
-      return res.status(401).json({ mensagem: "Token inválido" });
+      return res.status(400).json({ mensagem: "Token inválido" });
     } else if (error.name === "TokenExpiredError") {
-      return res.status(401).json({ mensagem: "Token expirado" });
+      return res.status(400).json({ mensagem: "Token expirado" });
     }
     return res.status(500).json({ mensagem: "Token Erro interno do Servidor" });
   }
