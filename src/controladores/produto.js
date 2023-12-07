@@ -23,4 +23,30 @@ const excluirProduto = async (req, res) => {
     }
 };
 
-module.exports = { excluirProduto };
+const detalharProduto = async (req, res) => {
+
+    const produto_id = req.params.id;
+
+    if (isNaN(produto_id)) {
+        return res.status(400).json({mensagem: "Id de produto invalido"})
+    }
+
+    try {
+
+        const produtoExiste = await knex('produtos').where('id', produto_id).first();
+
+        if (!produtoExiste) {
+            return res.status(404).json({mensagem: "Produto não cadastrado"})
+        }
+
+        req.produto = produtoExiste;
+
+        return res.status(200).json(req.produto)
+        
+    } catch (error) {
+        return res.status(500).json({ mensagem: 'Erro interno do servidor' });
+    }
+
+}
+
+module.exports = { excluirProduto, detalharProduto };
