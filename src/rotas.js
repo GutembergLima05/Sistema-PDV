@@ -1,6 +1,7 @@
 const express = require('express');
 const rotas = express()
-const validador = require('./intermediarios/validador');
+const knex = require('./db/conexao')
+const {validador, verificaDadosExistentes} = require('./intermediarios/validador');
 const esquemasUsuario = require('./validacoes/usuario');
 const usuario = require('./controladores/usuario');
 const validarLogin = require('./intermediarios/autenticacao');
@@ -23,4 +24,5 @@ rotas.get('/usuario', usuario.detalharUsuario)
 // Rota para editar usuario
 rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), usuario.editarUsuario)
 
+rotas.get('/cliente', verificaDadosExistentes) 
 module.exports = rotas
