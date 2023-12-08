@@ -29,8 +29,11 @@ rotas.get('/usuario', usuarios.detalharUsuario)
 rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), verificaDadosExistentes('usuarios'), usuarios.editarUsuario)
 
 // ROTAS DE PRODUTO
-//Rota para cadastrar um produto
+// Rota para cadastrar um produto
 rotas.post('/produto', validador(esquemasProduto.cadastrarOuEditar), produtos.cadastrarProduto)
+
+// Rota para editar um produto por ID
+rotas.put('/produto/:id', validador(esquemasProduto.cadastrarOuEditar), produtos.editarProduto)
 
 // Rota para excluir produto por ID
 rotas.delete('/produto/:id', produtos.excluirProduto)
