@@ -23,16 +23,16 @@ const cadastrarOuEditar = Joi.object({
     }),
   rua: Joi.string(),
   numero: Joi.number().integer().messages({
-    "number.base": "O campo numero nao e um numero valido",
+    "number.base": "O campo numero não é um numero válido",
   }),
   bairro: Joi.string().messages({
-    "string.base": "O campo bairro informado nao e valido",
+    "string.base": "O campo bairro informado não é válido",
   }),
   cidade: Joi.string().messages({
-    "string.base": "O campo bairro informado nao e valido",
+    "string.base": "O campo bairro informado não é válido",
   }),
   estado: Joi.string().messages({
-    "string.base": "O campo bairro informado nao e valido",
+    "string.base": "O campo bairro informado não é válido",
   }),
 });
 

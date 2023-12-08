@@ -3,6 +3,7 @@ const rotas = express()
 const {validador, verificaDadosExistentes} = require('./intermediarios/validador');
 const esquemasUsuario = require('./validacoes/usuario');
 const esquemasCliente = require('./validacoes/clientes')
+const esquemasProduto = require('./validacoes/produto')
 const usuarios = require('./controladores/usuario');
 const clientes = require('./controladores/cliente')
 const produtos = require('./controladores/produto');
@@ -28,6 +29,9 @@ rotas.get('/usuario', usuarios.detalharUsuario)
 rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), verificaDadosExistentes('usuarios'), usuarios.editarUsuario)
 
 // ROTAS DE PRODUTO
+//Rota para cadastrar um produto
+rotas.post('/produto', validador(esquemasProduto.cadastrarOuEditar), produtos.cadastrarProduto)
+
 // Rota para excluir produto por ID
 rotas.delete('/produto/:id', produtos.excluirProduto)
 
