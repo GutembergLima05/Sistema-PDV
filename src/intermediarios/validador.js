@@ -10,21 +10,20 @@ const validador = (requisicao) => async (req, res, next) => {
   next();
 };
 
-
 const verificaDadosExistentes = (tabela) => async (req, res, next) => {
-  console.log(req.body);
   const campos = Object.entries(req.body);
   for (let indice of campos) {
     if (indice[0] === "email" || indice[0] === "cpf") {
       const dados = await knex(tabela).where(indice[0], indice[1]).first();
-      if (dados && dados.id !== req.usuario.id) {
-        return res.json(
-          `O ${indice[0]} informado ja esta sendo usado`
-        );
+      const id = Object.values(req.params)
+      if (dados && tabela === "usuarios" && dados.id !== req.usuario.id) {
+        return res.json(`O ${indice[0]} informado ja esta sendo usado`);
+      } else if (dados && tabela === "clientes" && Number(id) != dados.id) {
+        return res.json(`O ${indice[0]} informado ja esta sendo usado por outro cliente`);
       }
     }
   }
-  next()
+  next();
 };
 
-module.exports = { validador, verificaDadosExistentes};
+module.exports = { validador, verificaDadosExistentes };

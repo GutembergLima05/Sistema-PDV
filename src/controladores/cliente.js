@@ -31,10 +31,10 @@ const editar = async (req, res) => {
     }
 
     const alteracaoCliente = await knex("clientes")
-    .where("id", id)
-    .update({ nome, email, cpf });
+    .where({id})
+    .update({ nome, email, cpf }).returning("*");
     
-    return res.status(200).json({ mensagem: 'Informações do cliente atualizadas com sucesso.' });
+    return res.status(200).json(alteracaoCliente);
   } catch (error) {
     return  res.status(500).json({ mensagem: 'Erro interno no servidor' });
   }

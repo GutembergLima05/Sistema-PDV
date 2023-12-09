@@ -1,11 +1,10 @@
 const knex = require("../db/conexao");
 
 const cadastrarProduto = async (req, res) => {
-  const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
 
   try {
     const categoriaValida = await knex("categorias")
-      .where("id", categoria_id)
+      .where("id", req.body.categoria_id)
       .first();
 
     if (!categoriaValida) {
@@ -13,15 +12,8 @@ const cadastrarProduto = async (req, res) => {
         .status(404)
         .json({ mensagem: `Categoria informada inválida.` });
     }
-    const novoProduto = {
-      descricao,
-      quantidade_estoque,
-      valor,
-      categoria_id,
-    };
-
     const cadastroProduto = await knex("produtos")
-      .insert(novoProduto)
+      .insert(req.body)
       .returning("*");
     return res.status(201).json(cadastroProduto);
   } catch (error) {
@@ -31,10 +23,14 @@ const cadastrarProduto = async (req, res) => {
 
 const editarProduto = async (req, res) => {
   const { id } = req.params;
-  const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
+  
+  if (isNaN(id)) {
+    return res.status(400).json({ mensagem: "Id de produto invalido" });
+  }
+
   try {
     const produtoValido = await knex("categorias").where("id", id).first();
-    const categoriaValida = await knex("categorias").where("id", categoria_id).first();
+    const categoriaValida = await knex("categorias").where("id", req.body.categoria_id).first();
 
     if (!produtoValido) {
       return res.status(404).json({ mensagem: `Produto informado não encontrado.` });
@@ -44,14 +40,8 @@ const editarProduto = async (req, res) => {
       return res.status(404).json({ mensagem: `Categoria informada não encontrada.` });
     }
 
-    const novoProduto = {
-      descricao,
-      quantidade_estoque,
-      valor,
-      categoria_id,
-    };
 
-    const cadastroProduto = await knex("produtos").update(novoProduto).returning("*");
+    const cadastroProduto = await knex("produtos").update(req.body).returning("*");
     return res.status(201).json(cadastroProduto[0]);
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
@@ -60,6 +50,9 @@ const editarProduto = async (req, res) => {
 
 const excluirProduto = async (req, res) => {
   const produtoID = req.params.id;
+  if (isNaN(produtoID)) {
+    return res.status(400).json({ mensagem: "Id de produto invalido" });
+  }
 
   try {
     const resultadoExclusao = await knex("produtos").where({id: produtoID}).del();
@@ -67,7 +60,7 @@ const excluirProduto = async (req, res) => {
     if (resultadoExclusao > 0) {
       return res.status(200).json({ mensagem: "Produto excluído com sucesso." });
     } else {
-      return res.status(404).json({mensagem:"Nenhum produto encontrado para exclusão ou permissão negada.",});
+      return res.status(404).json({mensagem:"Produto nao encontrado.",});
     }
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
