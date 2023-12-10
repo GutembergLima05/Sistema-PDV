@@ -42,7 +42,7 @@ const editarProduto = async (req, res) => {
 
 
     const cadastroProduto = await knex("produtos").update(req.body).returning("*");
-    return res.status(201).json(cadastroProduto[0]);
+    return res.status(200).json(cadastroProduto[0]);
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
   }
@@ -50,6 +50,7 @@ const editarProduto = async (req, res) => {
 
 const excluirProduto = async (req, res) => {
   const produtoID = req.params.id;
+  
   if (isNaN(produtoID)) {
     return res.status(400).json({ mensagem: "Id de produto invalido" });
   }
@@ -89,9 +90,14 @@ const detalharProduto = async (req, res) => {
   }
 };
 
+const listar = async (req, res) => {
+  const produtos = await knex('produtos');
+  return res.status(200).json(produtos)
+}
 module.exports = {
   excluirProduto,
   detalharProduto,
   cadastrarProduto,
   editarProduto,
+  listar
 };
