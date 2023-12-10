@@ -11,10 +11,10 @@ const validarLogin = require('./intermediarios/autenticacao');
 
 // ROTAS DE USUARIO
 // Rota pra cadastrar usuário
-rotas.post('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), verificaDadosExistentes('usuarios'), usuarios.cadastrar)
+rotas.post('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), verificaDadosExistentes('usuarios'), usuarios.cadastrarUsuario)
 
 //Rota para login
-rotas.post('/login', validador(esquemasUsuario.login), usuarios.login)
+rotas.post('/login', validador(esquemasUsuario.login), usuarios.loginUsuario)
 
 // Rota para listar categorias
 rotas.get('/categoria', usuarios.listarCategoria)
@@ -22,12 +22,15 @@ rotas.get('/categoria', usuarios.listarCategoria)
 // Verifica autenticacao
 rotas.use(validarLogin)
 
+//  --------------------   x        ---------------------
+
 // Rota para detalhar usuario
 rotas.get('/usuario', usuarios.detalharUsuario)
 
 // Rota para editar usuario
 rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), verificaDadosExistentes('usuarios'), usuarios.editarUsuario)
 
+//  --------------------   x        ---------------------
 
 // ROTAS DE PRODUTO
 // Rota para cadastrar um produto
@@ -43,17 +46,19 @@ rotas.delete('/produto/:id', produtos.excluirProduto)
 rotas.get('/produto/:id', produtos.detalharProduto)
 
 // Rota para listar produtos
-rotas.get('/produto', produtos.listar)
+rotas.get('/produto', produtos.listarProduto)
+
+//  --------------------   x        ---------------------
 
 // ROTAS DE CLIENTE
 // Rota para cadastrar cliente
-rotas.post('/cliente', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes('clientes'), clientes.cadastrar)
+rotas.post('/cliente', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes('clientes'), clientes.cadastrarCliente)
 
 // Rota para detalhar cliente
-rotas.get('/cliente/:id', clientes.detalhar)
+rotas.get('/cliente/:id', clientes.detalharCliente)
 
 // Rota para editar cliente
-rotas.put('/cliente/:id', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes('clientes'), clientes.editar)
+rotas.put('/cliente/:id', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes('clientes'), clientes.editarCliente)
 
 // Rota Listar Cliente
 rotas.get("/cliente", clientes.listarClientes)

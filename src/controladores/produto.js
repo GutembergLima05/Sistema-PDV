@@ -90,7 +90,7 @@ const detalharProduto = async (req, res) => {
   }
 };
 
-const listar = async (req, res) => {
+const listarProduto = async (req, res) => {
   const produtos = await knex('produtos');
   return res.status(200).json(produtos)
 }
@@ -99,5 +99,5 @@ module.exports = {
   detalharProduto,
   cadastrarProduto,
   editarProduto,
-  listar
+  listarProduto
 };
