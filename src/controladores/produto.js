@@ -101,29 +101,23 @@ const detalharProduto = async (req, res) => {
 
 const listarProdutos = async (req, res) => {
   try {
-    const validaCategoria = await knex("categorias")
-      .where({ id: req.query.categoria_id })
-      .first();
-
-    if (!validaCategoria) {
-      return res
-        .status(404)
-        .json({ mensagem: "Categoria informada não encontrada!" });
-    }
-
     if (req.query.categoria_id) {
-      const produtos = await knex("produtos").where(
-        "categoria_id",
-        req.query.categoria_id
-      );
+      const validaCategoria = await knex("categorias").where({ id: req.query.categoria_id });
+  
+      if (validaCategoria.length === 0) {
+        return res.status(404).json({ mensagem: "Categoria informada não encontrada!" });
+      }
+  
+      const produtos = await knex("produtos").where("categoria_id", req.query.categoria_id);
       return res.status(200).json(produtos);
     }
-
+  
     const produtos = await knex("produtos").orderBy("id", "asc");
     return res.status(200).json(produtos);
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno do servidor" });
   }
+  
 };
 module.exports = {
   excluirProduto,

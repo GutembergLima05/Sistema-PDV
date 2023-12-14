@@ -27,4 +27,25 @@ const verificaDadosExistentes = (tabela) => async (req, res, next) => {
   next();
 };
 
-module.exports = { validador, verificaDadosExistentes };
+const verificaDadosPedidos =  (tabela) => async (req, res, next) => {
+  const { pedido_produtos, cliente_id } = req.body;
+
+  const validaCliente = await knex('clientes').where('id', cliente_id).first();
+  if(!validaCliente){
+    return res.status(404).json({ mensagem: `O cliente informado não existe!` });
+  }
+
+  for (let pedido of pedido_produtos){
+    const validaProduto = await knex(tabela).where('id', pedido.produto_id).first();
+    if(!validaProduto){
+      return res.status(404).json({ mensagem: `O produto de id ${pedido.produto_id} não existe!` });
+    }
+    if (validaProduto.quantidade_estoque < pedido.quantidade_produto){
+      return res.status(400).json({ mensagem: `O produto de id ${pedido.produto_id} contém apenas ${validaProduto.quantidade_estoque} unidades em estoque!` });
+    }
+  }
+
+  next();
+};
+
+module.exports = { validador, verificaDadosExistentes, verificaDadosPedidos };

@@ -1,12 +1,14 @@
 const express = require('express');
-const rotas = express()
-const {validador, verificaDadosExistentes} = require('./intermediarios/validador');
+const rotas = express();
+const {validador, verificaDadosExistentes, verificaDadosPedidos} = require('./intermediarios/validador');
 const esquemasUsuario = require('./validacoes/usuario');
-const esquemasCliente = require('./validacoes/clientes')
-const esquemasProduto = require('./validacoes/produto')
+const esquemasCliente = require('./validacoes/clientes');
+const esquemasProduto = require('./validacoes/produto');
+const esquemasPedido = require('./validacoes/pedido');
 const usuarios = require('./controladores/usuario');
-const clientes = require('./controladores/cliente')
+const clientes = require('./controladores/cliente');
 const produtos = require('./controladores/produto');
+const pedidos = require('./controladores/pedido');
 const validarLogin = require('./intermediarios/autenticacao');
 
 // ROTAS DE USUARIO
@@ -62,5 +64,11 @@ rotas.put('/cliente/:id', validador(esquemasCliente.cadastrarOuEditar), verifica
 
 // Rota para Listar Clientes
 rotas.get("/cliente", clientes.listarClientes)
+
+//  --------------------   x        ---------------------
+
+// ROTAS DE PEDIDO
+// Rota para cadastrar Pedido
+rotas.post('/pedido', validador(esquemasPedido.cadastrarOuEditar), verificaDadosPedidos('produtos'), pedidos.cadastrarPedido)
 
 module.exports = rotas
