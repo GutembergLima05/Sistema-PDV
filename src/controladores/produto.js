@@ -13,13 +13,6 @@ const cadastrarProduto = async (req, res) => {
         .json({ mensagem: `Categoria informada inválida.` });
     }
 
-    const novoProduto = {
-      descricao,
-      quantidade_estoque,
-      valor,
-      categoria_id,
-    };
-
     const cadastroProduto = await knex("produtos")
       .insert({ descricao, quantidade_estoque, valor, categoria_id })
       .returning("*");
@@ -53,7 +46,7 @@ const editarProduto = async (req, res) => {
 
     const atualizarProduto = await knex("produtos")
       .where("id", id)
-      .update({ descricao, quantidade_estoque, valor, categoria_id})
+      .update({ descricao, quantidade_estoque, valor, categoria_id })
       .returning("*");
     return res.status(200).json(atualizarProduto[0]);
   } catch (error) {
@@ -65,6 +58,11 @@ const excluirProduto = async (req, res) => {
   const produtoID = req.params.id;
 
   try {
+
+    if (isNaN(produtoID)) {
+      return res.status(400).json({ mensagem: "Id de produto invalido" });
+    } 
+    
     const resultadoExclusao = await knex("produtos")
       .where({ id: produtoID })
       .del();
