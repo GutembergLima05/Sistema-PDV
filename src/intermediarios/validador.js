@@ -16,10 +16,11 @@ const verificaDadosExistentes = (tabela) => async (req, res, next) => {
     if (indice[0] === "email" || indice[0] === "cpf") {
       const dados = await knex(tabela).where(indice[0], indice[1]).first();
       const id = Object.values(req.params)
-      if (dados && tabela === "usuarios" && dados.id !== req.usuario.id) {
-        return res.json({ mensagem: `O ${indice[0]} informado ja esta sendo usado` });
+      if (dados && tabela === "usuarios") {
+        return res.status(400).json({ mensagem: `O ${indice[0]} informado ja esta sendo usado` });
       } else if (dados && tabela === "clientes" && Number(id) != dados.id) {
-        return res.json({ mensagem: `O ${indice[0]} informado ja esta sendo usado por outro cliente` });
+        console.log(dados)
+        return res.status(400).json({ mensagem: `O ${indice[0]} informado ja esta sendo usado por outro cliente` });
       }
     }
   }

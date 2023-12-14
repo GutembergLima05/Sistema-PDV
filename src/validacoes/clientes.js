@@ -36,11 +36,11 @@ const cadastrarOuEditar = Joi.object({
     "string.empty": "O campo bairro está vazio",
   }),
   cidade: Joi.string().messages({
-    "string.base": "O campo bairro informado não é válido",
+    "string.base": "O campo cidade informado não é válido",
     "string.empty": "O campo cidade está vazio",
   }),
   estado: Joi.string().messages({
-    "string.base": "O campo bairro informado não é válido",
+    "string.base": "O campo estado informado não é válido",
     "string.empty": "O campo estado está vazio",
   }),
 }).unknown(true);
