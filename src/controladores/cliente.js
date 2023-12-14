@@ -17,7 +17,8 @@ const cadastrarCliente = async (req, res) => {
 const detalharCliente = async (req, res) => {
   const { id } = req.params;
   try {
-    if (isNaN(produtoID)) {
+
+    if (isNaN(id)) {
       return res.status(400).json({ mensagem: "Id de produto invalido" });
     }
 
