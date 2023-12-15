@@ -13,13 +13,6 @@ const cadastrarProduto = async (req, res) => {
         .json({ mensagem: `Categoria informada inválida.` });
     }
 
-    const novoProduto = {
-      descricao,
-      quantidade_estoque,
-      valor,
-      categoria_id,
-    };
-
     const cadastroProduto = await knex("produtos")
       .insert({ descricao, quantidade_estoque, valor, categoria_id })
       .returning("*");
