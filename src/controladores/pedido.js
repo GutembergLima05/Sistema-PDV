@@ -1,13 +1,37 @@
 const knex = require("../db/conexao");
 
 const cadastrarPedido = async (req, res) => {
-    const { observacao, cliente_id, pedidos_produtos } = req.body;
+    const { observacao, cliente_id, pedido_produtos } = req.body;
     try {
-        return res.status(200).json({ mensagem: "dando bom até o memnto" });
+      let valor_total = 0; 
+      for (let pedido of pedido_produtos) {
+        const produto = await knex('produtos').where('id', pedido.produto_id).first();
+        valor_total += produto.valor * Number(pedido.quantidade_produto);
+      }
+      const cadastroPedido = await knex('pedidos').insert({ observacao, cliente_id, valor_total }).returning('*');
+      for (let pedidoProduto of pedido_produtos) {
+        const produto = await knex('produtos').where('id', pedidoProduto.produto_id).first();
+        const pedidoProdutoData = {
+          quantidade_produto: pedidoProduto.quantidade_produto,
+          valor_produto: produto.valor,
+          pedido_id: cadastroPedido[0].id, 
+          produto_id: produto.id,
+        };
+        const atualizarProduto = {
+            descricao: produto.descricao, 
+            quantidade_estoque: produto.quantidade_estoque - pedidoProduto.quantidade_produto, 
+            valor: produto.valor, 
+            categoria_id: produto.categoria_id
+        }
+        await knex("produtos").where("id", produto.id).update(atualizarProduto)
+        await knex('pedidos_produtos').insert(pedidoProdutoData);
+      }
+      return res.status(200).json(cadastroPedido[0]);
     } catch (error) {
-    return res.status(500).json({ mensagem: "Erro interno no servidor" });
+      return res.status(500).json({ mensagem: "Erro interno no servidor" });
     }
-}
+  };
+  
 
 module.exports = {
     cadastrarPedido
