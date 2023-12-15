@@ -1,6 +1,6 @@
 const knex = require("../db/conexao");
 
-const cadastrarProduto = async (req, res) => {
+const cadastrar = async (req, res) => {
   const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
   try {
     const categoriaValida = await knex("categorias")
@@ -22,7 +22,7 @@ const cadastrarProduto = async (req, res) => {
   }
 };
 
-const editarProduto = async (req, res) => {
+const editar = async (req, res) => {
   const { id } = req.params;
   const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
 
@@ -54,7 +54,7 @@ const editarProduto = async (req, res) => {
   }
 };
 
-const excluirProduto = async (req, res) => {
+const excluir = async (req, res) => {
   const produtoID = req.params.id;
 
   try {
@@ -79,7 +79,7 @@ const excluirProduto = async (req, res) => {
   }
 };
 
-const detalharProduto = async (req, res) => {
+const detalhar = async (req, res) => {
   const produto_id = req.params.id;
 
   try {
@@ -99,7 +99,7 @@ const detalharProduto = async (req, res) => {
   }
 };
 
-const listarProdutos = async (req, res) => {
+const listar = async (req, res) => {
   try {
     if (req.query.categoria_id) {
       const validaCategoria = await knex("categorias").where({ id: req.query.categoria_id });
@@ -120,9 +120,9 @@ const listarProdutos = async (req, res) => {
   
 };
 module.exports = {
-  excluirProduto,
-  detalharProduto,
-  cadastrarProduto,
-  editarProduto,
-  listarProdutos,
+  excluir,
+  detalhar,
+  cadastrar,
+  editar,
+  listar,
 };

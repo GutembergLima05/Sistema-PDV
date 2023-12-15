@@ -2,7 +2,7 @@ const knex = require("../db/conexao");
 const transportador = require('../email');
 const compiladorHtml = require('../utils/compiladorHtml');
 
-const cadastrarPedido = async (req, res) => {
+const cadastrar = async (req, res) => {
     const { observacao, cliente_id, pedido_produtos } = req.body;
     try {
       let valor_total = 0; 
@@ -53,5 +53,5 @@ const cadastrarPedido = async (req, res) => {
   
 
 module.exports = {
-    cadastrarPedido
+    cadastrar
 }
