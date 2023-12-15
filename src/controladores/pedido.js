@@ -1,4 +1,6 @@
 const knex = require("../db/conexao");
+const transportador = require('../email');
+const compiladorHtml = require('../utils/compiladorHtml');
 
 const cadastrarPedido = async (req, res) => {
     const { observacao, cliente_id, pedido_produtos } = req.body;
@@ -26,8 +28,25 @@ const cadastrarPedido = async (req, res) => {
         await knex("produtos").where("id", produto.id).update(atualizarProduto)
         await knex('pedidos_produtos').insert(pedidoProdutoData);
       }
+
+      const nomeCliente = await knex('clientes').where('id', cliente_id).returning('*').first();
+
+      const html = await compiladorHtml('./src/templates/pedido.html', {
+        nomeusuario: nomeCliente.nome,
+        pedido_id: cadastroPedido[0].id,
+        total: cadastroPedido[0].valor_total
+      })
+
+      transportador.sendMail({
+        from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+        to: `${nomeCliente.nome} <${nomeCliente.email}>`,
+        subject: 'Confirmação de Pedido',
+        html,
+      })
+
       return res.status(200).json(cadastroPedido[0]);
     } catch (error) {
+      console.log(error)
       return res.status(500).json({ mensagem: "Erro interno no servidor" });
     }
   };

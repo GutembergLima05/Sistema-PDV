@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Pedido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Seu pedido foi concluído com sucesso!</h1>
+        <p>Olá {{nomeusuario}},</p>
+        <p>Seu pedido foi processado e está a caminho. Aqui estão os detalhes:</p>
+        <ul>
+            <li><strong>Código de Pedido:</strong> {{pedido_id}}</li>
+            <li><strong>Total:</strong> $ {{total}} reais</li>
+        </ul>
+        <p>Agradecemos por escolher nossa loja!</p>
+        <p class="footer">Atenciosamente,<br>A Equipe 8</p>
+    </div>
+</body>
+</html>
