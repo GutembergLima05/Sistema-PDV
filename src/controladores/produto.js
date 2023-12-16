@@ -55,9 +55,22 @@ const editar = async (req, res) => {
 };
 
 const excluir = async (req, res) => {
-  const produtoID = req.params.id;
+  const produtoID = req.params.id;  
 
   try {
+
+    const produtoEstaViculadoPedido = await knex("pedidos_produtos").where({produto_id: produtoID}).first();
+    
+    if (produtoEstaViculadoPedido) {
+      return res.status(400).json({mensagem:"Não é posive deletar o produto pois ele esta vinculado ao pedido"})
+    }
+
+    if (produtoEstaViculadoPedido && produtoEstaViculadoPedido.produto_imagem) {
+      
+      await excluirArquivo(produtoEstaViculadoPedido.produto_imagem);
+      await knex("produtos").where({id:produtoID}).update({produto_imagem: null});
+
+    }
 
     if (isNaN(produtoID)) {
       return res.status(400).json({ mensagem: "Id de produto invalido" });
