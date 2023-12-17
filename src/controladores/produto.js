@@ -92,7 +92,7 @@ const excluir = async (req, res) => {
     const produtoEstaViculadoPedido = await knex("pedidos_produtos").where({produto_id: produtoID}).first();
     
     if (produtoEstaViculadoPedido) {
-      return res.status(400).json({mensagem:"Não é posive deletar o produto pois ele esta vinculado ao pedido"})
+      return res.status(400).json({mensagem:"Não é possivel deletar o produto pois ele esta vinculado ao pedido"})
     }
 
     if (produtoEstaViculadoPedido && produtoEstaViculadoPedido.produto_imagem) {
