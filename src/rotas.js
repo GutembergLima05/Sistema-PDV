@@ -37,10 +37,10 @@ rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), verifica
 
 // ROTAS DE PRODUTO
 // Rota para cadastrar um produto
-rotas.post('/produto', multer.single('imagem') ,validador(esquemasProduto.cadastrarOuEditar), produtos.cadastrar)
+rotas.post('/produto', multer.single('imagem'), validador(esquemasProduto.cadastrarOuEditar), produtos.cadastrar)
 
 // Rota para editar um produto por ID
-rotas.put('/produto/:id', validador(esquemasProduto.cadastrarOuEditar), produtos.editar)
+rotas.put('/produto/:id', multer.single('imagem'),validador(esquemasProduto.cadastrarOuEditar), produtos.editar)
 
 // Rota para excluir produto por ID
 rotas.delete('/produto/:id', produtos.excluir)
