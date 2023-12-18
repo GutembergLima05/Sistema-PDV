@@ -72,4 +72,7 @@ rotas.get("/cliente", clientes.listar)
 // Rota para cadastrar Pedido
 rotas.post('/pedido', validador(esquemasPedido.cadastrarOuEditar), verificaDadosPedidos('produtos'), pedidos.cadastrar)
 
+// Rota para listar pedidos
+rotas.get('/pedido', pedidos.listar)
+
 module.exports = rotas
