@@ -18,10 +18,9 @@ const carregar = async (path, buffer, mimetype) => {
       ContentType: mimetype,
     })
     .promise();
-
   return imagem;
 };
 
 module.exports = {
-  carregar,
+  carregar, s3
 };

@@ -66,7 +66,7 @@ rotas.put('/cliente/:id', validador(esquemasCliente.cadastrarOuEditar), verifica
 // Rota para Listar Clientes
 rotas.get("/cliente", clientes.listar)
 
-//  --------------------   x        ---------------------
+//  --------------------   x   ---------------------
 
 // ROTAS DE PEDIDO
 // Rota para cadastrar Pedido
