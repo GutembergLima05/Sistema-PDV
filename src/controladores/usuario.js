@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const senhaJwt = process.env.SENHA_JWT;
 
-const cadastrarUsuario = async (req, res) => {
+const cadastrar = async (req, res) => {
   const { nome, email, senha } = req.body;
 
   try {
@@ -21,7 +21,7 @@ const cadastrarUsuario = async (req, res) => {
   }
 };
 
-const loginUsuario = async (req, res) => {
+const login = async (req, res) => {
   const { email, senha } = req.body;
 
   try {
@@ -47,7 +47,7 @@ const loginUsuario = async (req, res) => {
   }
 };
 
-const detalharUsuario = async (req, res) => {
+const detalhar = async (req, res) => {
   try {
     return res.status(200).json(req.usuario);
   } catch (error) {
@@ -57,7 +57,7 @@ const detalharUsuario = async (req, res) => {
   }
 };
 
-const editarUsuario = async (req, res) => {
+const editar = async (req, res) => {
   const { nome, email, senha } = req.body;
   const { id: usuarioID } = req.usuario;
 
@@ -75,7 +75,7 @@ const editarUsuario = async (req, res) => {
   }
 };
 
-const listarCategoria = async (req, res) => {
+const listarCategorias = async (req, res) => {
   try {
     const categorias = await knex("categorias");
     return res.status(200).json(categorias);
@@ -84,9 +84,9 @@ const listarCategoria = async (req, res) => {
   }
 };
 module.exports = {
-  loginUsuario,
-  cadastrarUsuario,
-  detalharUsuario,
-  editarUsuario,
-  listarCategoria,
+  login,
+  cadastrar,
+  detalhar,
+  editar,
+  listarCategorias,
 };

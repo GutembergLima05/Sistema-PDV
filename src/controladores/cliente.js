@@ -1,6 +1,6 @@
 const knex = require("../db/conexao");
 
-const cadastrarCliente = async (req, res) => {
+const cadastrar = async (req, res) => {
   const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } =
     req.body;
 
@@ -14,7 +14,7 @@ const cadastrarCliente = async (req, res) => {
   }
 };
 
-const detalharCliente = async (req, res) => {
+const detalhar = async (req, res) => {
   const { id } = req.params;
   try {
 
@@ -33,7 +33,7 @@ const detalharCliente = async (req, res) => {
   }
 };
 
-const editarCliente = async (req, res) => {
+const editar = async (req, res) => {
   const { id } = req.params;
   const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } =
     req.body;
@@ -58,7 +58,7 @@ const editarCliente = async (req, res) => {
   }
 };
 
-const listarClientes = async (req, res) => {
+const listar = async (req, res) => {
   try {
     const clientes = await knex("clientes").orderBy("id", "asc");
 
@@ -69,8 +69,8 @@ const listarClientes = async (req, res) => {
 };
 
 module.exports = {
-  cadastrarCliente,
-  detalharCliente,
-  editarCliente,
-  listarClientes,
+  cadastrar,
+  detalhar,
+  editar,
+  listar,
 };
