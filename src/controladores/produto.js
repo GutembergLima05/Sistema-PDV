@@ -21,7 +21,6 @@ const cadastrar = async (req, res) => {
     if(req.file){
       const {originalname, buffer, mimetype} = req.file
       let nome = originalname
-      console.log(nome)
       nome = originalname.replace(/\s+/g, '_');
       const imagem = await imagens.carregar(nome, buffer, mimetype)
 
@@ -88,7 +87,6 @@ const editar = async (req, res) => {
 
       // CARREGA IMAGEM NOVA
       let nome = originalname
-      console.log(nome)
       nome = originalname.replace(/\s+/g, '_');
       const imagem = await imagens.carregar(nome, buffer, mimetype)
 
@@ -124,7 +122,6 @@ const excluir = async (req, res) => {
       return res.status(400).json({mensagem:"Não é possivel deletar o produto pois ele esta vinculado ao pedido"})
     }
 
-
     const arquivos = await imagens.s3.listObjects({
       Bucket: process.env.BUCKET
     }).promise()
@@ -135,7 +132,6 @@ const excluir = async (req, res) => {
         imagem.push(objeto.Key)
         break
       }
-      console.log(produto_imagem)
     }
     await imagens.s3.deleteObject({
       Bucket: process.env.BUCKET,
@@ -174,7 +170,6 @@ const detalhar = async (req, res) => {
     }
 
     req.produto = produtoExiste;
-    console.log(produtoExiste.produto_imagem)
     return res.status(200).json(req.produto);
   } catch (error) {
     return res.status(500).json({ mensagem: "Erro interno do servidor" });

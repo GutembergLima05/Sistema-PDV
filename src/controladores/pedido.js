@@ -51,7 +51,28 @@ const cadastrar = async (req, res) => {
     }
   };
   
-
+  const listar = async (req, res) => {
+    const {cliente_id} = req.query
+    try {
+      if(cliente_id){
+        const pedidos = await knex('pedidos').where('cliente_id', cliente_id)
+        if(pedidos.length === 0){
+          return res.status(404).json({mensagem: "Nenhum pedido registrado"})
+        }
+        return res.status(200).json(pedidos)
+      }
+      const pedidos = await knex('pedidos')
+      if(pedidos.length === 0){
+        return res.status(404).json({mensagem: "Nenhum pedido registrado"})
+      }
+      return res.status(200).json(pedidos)
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json({mensagen: 'Erro interno no servidor'})
+    }
+   
+  }
 module.exports = {
-    cadastrar
+    cadastrar,
+    listar
 }

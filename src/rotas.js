@@ -66,10 +66,12 @@ rotas.put('/cliente/:id', validador(esquemasCliente.cadastrarOuEditar), verifica
 // Rota para Listar Clientes
 rotas.get("/cliente", clientes.listar)
 
-//  --------------------   x        ---------------------
+//  --------------------   x   ---------------------
 
 // ROTAS DE PEDIDO
 // Rota para cadastrar Pedido
 rotas.post('/pedido', validador(esquemasPedido.cadastrarOuEditar), verificaDadosPedidos('produtos'), pedidos.cadastrar)
 
+//Rota para listar pedidos
+rotas.get('/pedido/', pedidos.listar)
 module.exports = rotas
