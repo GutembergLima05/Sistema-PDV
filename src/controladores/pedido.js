@@ -49,29 +49,50 @@ const cadastrar = async (req, res) => {
       console.log(error)
       return res.status(500).json({ mensagem: "Erro interno no servidor" });
     }
-  };
-  
-  const listar = async (req, res) => {
-    const {cliente_id} = req.query
-    try {
-      if(cliente_id){
-        const pedidos = await knex('pedidos').where('cliente_id', cliente_id)
-        if(pedidos.length === 0){
-          return res.status(404).json({mensagem: "Nenhum pedido registrado"})
-        }
-        return res.status(200).json(pedidos)
-      }
-      const pedidos = await knex('pedidos')
-      if(pedidos.length === 0){
-        return res.status(404).json({mensagem: "Nenhum pedido registrado"})
-      }
-      return res.status(200).json(pedidos)
-    } catch (error) {
-      console.log(error)
-      return res.status(500).json({mensagen: 'Erro interno no servidor'})
+};
+const listar = async (req, res) => {
+  const { cliente_id } = req.query;
+
+  try {
+    const pedidos = cliente_id
+      ? await knex('pedidos').where('cliente_id', cliente_id)
+      : await knex('pedidos');
+
+    if (pedidos.length === 0) {
+      return res.status(404).json({ mensagem: "Nenhum pedido registrado" });
     }
-   
+
+    const respostaFormatada = await Promise.all(
+      pedidos.map(async (pedido) => {
+        const produtosDoPedido = await knex('pedidos_produtos')
+          .where('pedido_id', pedido.id)
+          .select();
+
+        return {
+          pedido: {
+            id: pedido.id,
+            valor_total: pedido.valor_total,
+            observacao: pedido.observacao,
+            cliente_id: pedido.cliente_id,
+          },
+          pedido_produtos: produtosDoPedido.map((produto) => ({
+            id: produto.id,
+            quantidade_produto: produto.quantidade_produto,
+            valor_produto: produto.valor_produto,
+            pedido_id: produto.pedido_id,
+            produto_id: produto.produto_id,
+          })),
+        };
+      })
+    );
+
+    return res.status(200).json(respostaFormatada);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ mensagem: "Erro interno no servidor" });
   }
+};
+
 module.exports = {
     cadastrar,
     listar

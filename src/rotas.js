@@ -31,7 +31,7 @@ rotas.use(validarLogin)
 rotas.get('/usuario', usuarios.detalhar)
 
 // Rota para editar usuario
-rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), verificaDadosExistentes(['usuarios', "atualizar"]), usuarios.editar)
+rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), verificaDadosExistentes(['usuarios', "atualizar"]), usuarios.editarUsuario)
 
 //  --------------------   x        ---------------------
 
@@ -55,13 +55,13 @@ rotas.get('/produto', produtos.listar)
 
 // ROTAS DE CLIENTE
 // Rota para cadastrar cliente
-rotas.post('/cliente', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes(['clientes']), clientes.cadastrar)
+rotas.post('/cliente', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes(['clientes']), clientes.cadastrarCliente)
 
 // Rota para detalhar cliente por ID
 rotas.get('/cliente/:id', clientes.detalhar)
 
 // Rota para editar cliente por ID
-rotas.put('/cliente/:id', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes(['clientes']), clientes.editar)
+rotas.put('/cliente/:id', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes(['clientes']), clientes.editarCliente)
 
 // Rota para Listar Clientes
 rotas.get("/cliente", clientes.listar)
