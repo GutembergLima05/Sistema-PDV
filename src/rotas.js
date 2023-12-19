@@ -31,11 +31,7 @@ rotas.use(validarLogin)
 rotas.get('/usuario', usuarios.detalhar)
 
 // Rota para editar usuario
-<<<<<<< HEAD
-rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), verificaDadosExistentes(['usuarios', "atualizar"]), usuarios.editarUsuario)
-=======
 rotas.put('/usuario', validador(esquemasUsuario.cadastroOuAtualizacao), verificaDadosExistentes(['usuarios', "atualizar"]), usuarios.editar)
->>>>>>> hml
 
 //  --------------------   x        ---------------------
 
@@ -59,21 +55,13 @@ rotas.get('/produto', produtos.listar)
 
 // ROTAS DE CLIENTE
 // Rota para cadastrar cliente
-<<<<<<< HEAD
-rotas.post('/cliente', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes(['clientes']), clientes.cadastrarCliente)
-=======
 rotas.post('/cliente', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes(['clientes']), clientes.cadastrar)
->>>>>>> hml
 
 // Rota para detalhar cliente por ID
 rotas.get('/cliente/:id', clientes.detalhar)
 
 // Rota para editar cliente por ID
-<<<<<<< HEAD
-rotas.put('/cliente/:id', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes(['clientes']), clientes.editarCliente)
-=======
 rotas.put('/cliente/:id', validador(esquemasCliente.cadastrarOuEditar), verificaDadosExistentes(['clientes']), clientes.editar)
->>>>>>> hml
 
 // Rota para Listar Clientes
 rotas.get("/cliente", clientes.listar)
@@ -84,6 +72,7 @@ rotas.get("/cliente", clientes.listar)
 // Rota para cadastrar Pedido
 rotas.post('/pedido', validador(esquemasPedido.cadastrarOuEditar), verificaDadosPedidos('produtos'), pedidos.cadastrar)
 
-//Rota para listar pedidos
-rotas.get('/pedido/', pedidos.listar)
+// Rota para listar pedidos
+rotas.get('/pedido', pedidos.listar)
+
 module.exports = rotas
