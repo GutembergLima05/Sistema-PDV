@@ -46,7 +46,6 @@ const cadastrar = async (req, res) => {
 
       return res.status(200).json(cadastroPedido[0]);
     } catch (error) {
-      console.log(error)
       return res.status(500).json({ mensagem: "Erro interno no servidor" });
     }
 };
@@ -88,7 +87,6 @@ const listar = async (req, res) => {
 
     return res.status(200).json(respostaFormatada);
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ mensagem: "Erro interno no servidor" });
   }
 };
