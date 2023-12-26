@@ -1,56 +1,6 @@
-# desafio-backend-05-pdv
-![](https://i.imgur.com/xG74tOh.png)
+# Sistema Pdv - Backend
 
-# Desafio Módulo 5 - Backend
-
-Seja bem vindo(a) ao desafio do módulo 5.
-
-Sua tarefa como desenvolvedor(a) será criar uma API para um PDV (Frente de Caixa). Esse será um projeto piloto, ou seja, no futuro outras funcionalidades serão implementadas.
-
-
-**Importante 1: Sempre que a validação de uma requisição falhar, responda com código de erro e mensagem adequada à situação, ok?**
-
-**Importante 2: Para endpoints de cadastro/atualização os objetos de requisição devem conter as propriedades equivalentes as colunas das tabelas.**
-
-**Exemplo:**
-
-```javascript
-// Corpo da requisição para cadastro de usuário (body)
-{
-    "nome": "José",
-    "email": "jose@email.com",
-    "senha": "jose"
-}
-```
-
-**ATENÇÃO: Todos os endpoints deverão atender os requisitos citados acima.**
-
-## **Banco de dados**
-
-Você precisa criar um Banco de Dados PostgreSQL chamado `pdv`.
-
-**IMPORTANTE: Deverá ser criado no projeto o arquivo SQL que deverá ser o script contendo os comandos de criação das tabelas respeitando os nomes das tabelas e colunas respectivamente, além de, conter os comandos para a inserção das categorias que devem ser previamente cadastradas (estão citadas na 1ª Sprint no item Listar Categorias).**
-
-## **Requisitos obrigatórios**
-
--   A API a ser criada deverá acessar o banco de dados a ser criado `pdv` para persistir e manipular os dados de categorias, clientes, pedidos, produtos e usuários utilizados pela aplicação.
--   O campo id das tabelas no banco de dados deve ser auto incremento, chave primária e não deve permitir edição uma vez criado.
--   Qualquer valor monetário deverá ser representado em centavos (Ex.: R$ 10,00 reais = 1000)
-
-## **Status Codes**
-
-Abaixo, listamos os possíveis **_status codes_** esperados como resposta da API.
-
-```javascript
-// 200 (OK) = requisição bem sucedida
-// 201 (Created) = requisição bem sucedida e algo foi criado
-// 204 (No Content) = requisição bem sucedida, sem conteúdo no corpo da resposta
-// 400 (Bad Request) = o servidor não entendeu a requisição pois está com uma sintaxe/formato inválido
-// 401 (Unauthorized) = o usuário não está autenticado (logado)
-// 403 (Forbidden) = o usuário não tem permissão de acessar o recurso solicitado
-// 404 (Not Found) = o servidor não pode encontrar o recurso solicitado
-// 500 (Internal Server Error) = erro inesperado do servidor
-```
+Sistema PDV para uma loja ficticia com o intuito de simular toda as funcionalidades de um sistema PDV.
 
 <details>
 <summary>1ª Sprint</summary>
@@ -534,18 +484,3 @@ Critérios de aceite:
 </details>
 
 </details>
-
----
-
-## Aulas úteis:
-
--   [Revisão pt1](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/34df4763-689b-409c-894b-248dacd70d81)
--   [Revisão pt2](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/6b733465-c761-40de-94ad-ac85a4129152)
--   [Git e fluxo de trabalho em equipe](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/2812eee7-5ba5-4e62-b2d0-7b392ba6b870)
--   [Deploy](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/4c75e05a-581d-427b-9cdc-527c1fab47b2)
--   [Envio de e-mails](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/9ae4e70f-f502-41c5-af47-c22e9c0880a7)
--   [Validações e boas práticas](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/19bcf6fa-5589-43ea-b6ed-a9817b9d51ae)
--   [Upload de arquivos](https://aulas.cubos.academy/turma/41c6a64e-cfc7-4fc4-9b5d-21d8dfde4e6f/aulas/a124ac7e-9db8-4007-9532-cf0e84c8a6cc)
-
-
-###### tags: `back-end` `módulo 5` `nodeJS` `PostgreSQL` `API REST` `desafio`
